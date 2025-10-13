@@ -9,6 +9,7 @@ export interface User extends Document{
     email:string,
     password:string,
     verifiecode:string,
+    isveried:boolean,
     verifiedcodeExpiry:Date,
     isAcceptingmessages:boolean,
     messages:Message[]
@@ -54,6 +55,10 @@ const UserSchema : Schema<User>=new Schema({
     verifiecode:{
         type:String,
         required:[true,"Verification code is required"]
+    },
+    isveried:{
+        type:Boolean,
+        default:false
     },
     verifiedcodeExpiry:{
         type:Date,
