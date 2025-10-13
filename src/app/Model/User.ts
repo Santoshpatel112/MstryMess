@@ -45,5 +45,23 @@ const UserSchema : Schema<User>=new Schema({
         match:[/^\S+@\S+\.\S+$/,"Please provide a valid email address"], // Regx for email validation
         lowercase:true,
         trim:true
+    },
+    password:{
+        type:String,
+        required:[true,"Password is required"]
     }
+    ,
+    verifiecode:{
+        type:String,
+        required:[true,"Verification code is required"]
+    },
+    verifiedcodeExpiry:{
+        type:Date,
+        required:[true,"Verification code expiry date is required"]
+    },
+    isAcceptingmessages:{
+        type:Boolean,
+        default:true
+    },
+    messages:[MessageSchema]
 })
