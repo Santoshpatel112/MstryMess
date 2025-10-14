@@ -5,6 +5,7 @@ interface VerificationEmailProps {
   otp: string;
 }
 
+
 export default function VerificationEmail({ username, otp }: VerificationEmailProps) {
   return (
     <div style={{ fontFamily: 'Roboto, Verdana, sans-serif', color: '#111', lineHeight: 1.5 }}>
