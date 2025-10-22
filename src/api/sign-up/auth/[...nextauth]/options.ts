@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
           await dbconnect();
           const user = await UserModel.findOne({ email: credentials.email }).exec();
           if (!user) return null;
+          if(user.isveried === false) throw new Error('Email not verified');
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
           if (!isPasswordValid) return null;
           return { id: user.id.toString(), username: user.username, email: user.email };
