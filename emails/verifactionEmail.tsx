@@ -14,10 +14,9 @@ export default function VerificationEmail({ username, otp }: VerificationEmailPr
       <p style={{ marginTop: 0 }}>
         Thank you for registering. Please use the following verification code to complete your registration:
       </p>
-
       <p style={{ fontSize: 20, fontWeight: 700, letterSpacing: 1 }}>{otp}</p>
-
       <p>If you did not request this code, please ignore this email.</p>
+
 
       <a
         href={`http://localhost:3000/verify/${username}`}
