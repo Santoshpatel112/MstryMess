@@ -1,6 +1,6 @@
 import { resend } from "../lib/resend";
 import React from 'react';
-import VerificationEmail from "../../emails/verifactionEmail";
+import VerificationEmail from "@/emails/verifactionEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 
 export async function sendVerifactionEmail(
