@@ -3,8 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbconnect from '@/lib/dbConnect';
 import UserModel from '@/Model/User';
-import { use } from 'react';
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -20,7 +18,7 @@ export const authOptions: NextAuthOptions = {
           await dbconnect(); // connect to the database
           const user = await UserModel.findOne({ email: credentials.email }).exec(); // find user by email
           if (!user) return null;
-          if(user.isveried === false) throw new Error('Email not verified');
+          if(user.isVerified === false) throw new Error('Email not verified');
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
           if (!isPasswordValid) return null;
           return user;
@@ -42,7 +40,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user}) {
         if(user){
             token._id=user._id?.toString();
-            token.isveried=user.isveried;
+            token.isVerified=user.isVerified;
             token.isAccepting=user.isAccepting;
             token.username=user.username;
 
@@ -53,7 +51,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session,  token }) {
         if(token){
             session.user._id=token._id?.toString();
-            session.user.isveried=token.isveried;
+            session.user.isVerified=token.isVerified;
             session.user.isAccepting=token.isAccepting;
             session.user.username=token.username;
         }
