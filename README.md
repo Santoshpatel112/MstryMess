@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mystery Message
+
+A Next.js application for anonymous messaging with user authentication and email verification.
+
+## Features
+
+- User authentication with NextAuth.js
+- Email verification system
+- Anonymous messaging
+- MongoDB database integration
+- Responsive UI with Tailwind CSS
+- Type-safe with TypeScript and Zod validation
+
+## Tech Stack
+
+- **Framework:** Next.js 15.5.5 (App Router)
+- **Authentication:** NextAuth.js
+- **Database:** MongoDB with Mongoose
+- **Email:** Resend
+- **Validation:** Zod
+- **Styling:** Tailwind CSS
+- **Language:** TypeScript
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ installed
+- MongoDB database (local or Atlas)
+- Resend account for email sending
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repo-url>
+cd mystrymess
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env` file in the root directory:
+```env
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+RESEND_API_KEY=your_resend_api_key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/
+│   ├── (auth)/
+│   │   └── sign-in/          # Sign-in page
+│   ├── api/
+│   │   ├── auth/
+│   │   │   └── [...nextauth]/ # NextAuth configuration
+│   │   └── sign-up/           # Sign-up API route
+│   ├── layout.tsx             # Root layout
+│   └── page.tsx               # Home page
+├── context/
+│   └── AuthProvider.tsx       # NextAuth session provider
+├── helper/
+│   └── sendVerificationEmail.ts # Email sending helper
+├── lib/
+│   ├── dbConnect.ts           # MongoDB connection
+│   └── resend.ts              # Resend configuration
+├── Model/
+│   └── User.ts                # User model
+├── schemas/
+│   ├── SigninSchema.ts        # Sign-in validation
+│   ├── SignupSchema.ts        # Sign-up validation
+│   └── verifySchema.ts        # Verification validation
+├── types/
+│   ├── ApiResponse.ts         # API response types
+│   ├── next-auth.d.ts         # NextAuth type extensions
+│   └── decls.d.ts             # Module declarations
+└── middleware.ts              # Route protection middleware
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Routes
 
-## Deploy on Vercel
+- `POST /api/sign-up` - User registration
+- `POST /api/auth/[...nextauth]` - NextAuth authentication
+- `GET /api/auth/[...nextauth]` - NextAuth session
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable | Description |
+|----------|-------------|
+| `MONGODB_URI` | MongoDB connection string |
+| `NEXTAUTH_SECRET` | Secret for NextAuth.js |
+| `NEXTAUTH_URL` | Application URL |
+| `RESEND_API_KEY` | Resend API key for emails |
+
+## Authentication Flow
+
+1. User signs up with username, email, and password
+2. System sends verification email with OTP
+3. User verifies email with OTP
+4. User can sign in with verified credentials
+5. Protected routes require authentication
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the MIT License.
