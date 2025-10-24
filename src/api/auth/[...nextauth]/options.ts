@@ -14,7 +14,16 @@ export const authOptions: NextAuthOptions = {
         email: { label: "email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials: {
+        email: string;
+        password: string;
+      } | undefined): Promise<{
+        id: string;
+        email: string;
+        username: string;
+        isVerified: boolean;
+        isAcceptingMessages: boolean;
+      } | null> {
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
@@ -29,7 +38,14 @@ export const authOptions: NextAuthOptions = {
             user.password
           );
           if (!isPasswordValid) return null;
-          return user;
+          
+          return {
+            id: (user._id as string | { toString(): string }).toString(),
+            email: user.email,
+            username: user.username,
+            isVerified: user.isVerified,
+            isAcceptingMessages: user.isAcceptingMessages
+          };
         } catch (err) {
           console.error("Authorize error", err);
           return null;
