@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs";
 import dbconnect from "@/lib/dbConnect";
 import UserModel from "@/Model/User";
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/sign-in",
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -62,12 +65,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // specify custom pages for sign-in and error handling
-  pages: {
-    signIn: "/sign-in",
-    error: "/auth/error",
-  },
-
   secret: process.env.NEXTAUTH_SECRET,
 };
 
