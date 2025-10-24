@@ -1,4 +1,3 @@
-import { log } from "console";
 import mongoose from "mongoose";
 
 
@@ -11,18 +10,26 @@ const connection :ConnectionObject={}
 
 async function dbconnect():Promise<void>{
     if(connection.isConnected){
-        console.log("already connected")
+        console.log("MongoDB: Already connected");
         return;
     }
+
+    if (!process.env.MONGO_URI) {
+        throw new Error("Please define MONGO_URI in your environment variables");
+    }
+
     try {
-       const dbconnect= await mongoose.connect(process.env.MONGO_URI ||"",{});
-        connection.isConnected=dbconnect.connections[0].readyState; // db connection [0] is default on ready state
-        console.log("Db connected Sucesfuly",dbconnect);
+        const opts = {
+            bufferCommands: true,
+        };
+
+        const dbconnect = await mongoose.connect(process.env.MONGO_URI, opts);
+        connection.isConnected = dbconnect.connections[0].readyState;
+        console.log("MongoDB: Connected successfully");
 
     } catch (error) {
-        log("Db connection failed",error);
-        // proces gressfulyy exit 
-        process.exit(1);
+        console.error("MongoDB connection failed:", error);
+        throw error; // Let the calling code handle the error
     }
 }
 
