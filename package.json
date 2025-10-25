@@ -9,10 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@react-email/components": "^0.5.7",
     "@react-email/render": "^1.4.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.24",
+=======
+    "bcryptjs": "^3.0.2",
+>>>>>>> 46089ef (Normalize line endings)
     "mongoose": "^8.19.1",
     "next": "15.5.5",
     "next-auth": "^4.24.11",
